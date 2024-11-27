@@ -9,5 +9,5 @@ public class CineRemakeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CineRemakeApplication.class, args);
 	}
-
+	//creando main del proyecto cine
 }
