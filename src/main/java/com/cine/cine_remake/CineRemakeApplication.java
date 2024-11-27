@@ -10,4 +10,6 @@ public class CineRemakeApplication {
 		SpringApplication.run(CineRemakeApplication.class, args);
 	}
 	//creando main del proyecto cine
+
+
 }
