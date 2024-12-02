@@ -1,9 +1,9 @@
 package com.cine.cine_remake.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Data
@@ -22,6 +22,8 @@ public class Users {
     private String lastName;
     @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "username", nullable = false)
+    private String username;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "phone", nullable = false)
@@ -29,7 +31,12 @@ public class Users {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Column(name = "registrationDate", nullable = false)
+    private LocalDateTime registrationDate;
 
-
+    @Transient
+    private String token;
 
 }
