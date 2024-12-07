@@ -1,6 +1,7 @@
 package com.cine.cine_remake.services.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,20 @@ public class UserServiceImpl implements UserService{
         String jwt = jwtProvider.generateToken(user);
         user.setToken(jwt);
         return user;
+    }
+
+    @Override
+    public Optional<Users> findUserById(Long id){
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Users> findAll(){
+        return userRepository.findAll();
     }
 }
