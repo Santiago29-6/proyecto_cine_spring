@@ -58,10 +58,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/authentication/sign-in", "/authentication/sign-up").permitAll()
-                .requestMatchers(HttpMethod.GET, "/personas/").permitAll()
-                .requestMatchers("/personas/**").hasRole(Role.ADMIN.name())
-                .requestMatchers("/user/**").authenticated()
+                .requestMatchers("api/v1/authentication/sign-in", "api/v1/authentication/sign-up").permitAll()
+                .requestMatchers("api/v1/user/me").authenticated()
+                .requestMatchers("api/v1/user/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);
