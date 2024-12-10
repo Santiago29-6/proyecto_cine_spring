@@ -28,10 +28,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class JwtProviderImpl implements JwtProvider{
     
     @Value("${app.jwt.secret}")
-    private String JWT_SECRET;
+    private String jwtSecret;
 
     @Value("${app.jwt.expiration-in-ms}")
-    private String JWT_EXPIRATION_IN_MS;
+    private String jwtExpirationInMs;
 
     @Override
     public String generateToken(UserPrincipal auth) {
@@ -39,8 +39,8 @@ public class JwtProviderImpl implements JwtProvider{
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
 
-    Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
-    long expirationInMs = Long.parseLong(JWT_EXPIRATION_IN_MS);
+    Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+    long expirationInMs = Long.parseLong(jwtExpirationInMs);
 
     return Jwts.builder()
             .setSubject(auth.getUsername())
@@ -53,8 +53,8 @@ public class JwtProviderImpl implements JwtProvider{
 
     @Override
     public String generateToken(Users user){
-        Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
-        long expirationInMs = Long.parseLong(JWT_EXPIRATION_IN_MS);
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+        long expirationInMs = Long.parseLong(jwtExpirationInMs);
         return Jwts.builder()
         .setSubject(user.getEmail())
         .claim("roles", user.getRole())
@@ -108,7 +108,7 @@ public class JwtProviderImpl implements JwtProvider{
             return null;
         }
 
-        Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         return Jwts.parser().setSigningKey(key)
         .build()
         .parseClaimsJws(token)

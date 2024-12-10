@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+import com.cine.cine_remake.model.Role;
 import com.cine.cine_remake.model.Users;
 import com.cine.cine_remake.security.UserPrincipal;
 import com.cine.cine_remake.services.user.UserService;
@@ -28,9 +29,9 @@ public class UserController {
         );
     }
 
-    @GetMapping("admin/all")
-    public ResponseEntity<List<Users>> getAllUsers(){
-        return ResponseEntity.ok(userService.findAll());
+    @GetMapping("admin/all/{role}")
+    public ResponseEntity<List<Users>> getAllUsers(@PathVariable("role") Role role){
+        return ResponseEntity.ok(userService.findUserByRole(role));
     }
 
     @DeleteMapping("admin/delete/{id}")
@@ -57,4 +58,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         }
     }
+
+  
+        
 }
