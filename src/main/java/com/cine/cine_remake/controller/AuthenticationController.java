@@ -34,7 +34,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/sign-in")
+     @PostMapping("/sign-in")
     public ResponseEntity<AuthResponse> signIn(@RequestBody AuthRequest authRequest) {
         String token = authenticationService.signInAndReturnJwt(authRequest);
         return new ResponseEntity<>(new AuthResponse(token), HttpStatus.OK);

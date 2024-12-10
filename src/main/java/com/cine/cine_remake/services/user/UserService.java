@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.cine.cine_remake.model.Role;
 import com.cine.cine_remake.model.Users;
 
 
@@ -22,5 +23,7 @@ public interface UserService {
     void deleteUser(Long id);
 
     List<Users> findAll();
+
+    List<Users> findUserByRole(Role role);
 
 }
