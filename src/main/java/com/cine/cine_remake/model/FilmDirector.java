@@ -3,16 +3,14 @@ package com.cine.cine_remake.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "genre")
-public class Genre {
+@Table(name = "filmDirector")
+public class FilmDirector {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +21,8 @@ public class Genre {
 
     @Column(name = "registrationDate", nullable = false)
     private LocalDateTime registrationDate;
-
-    @Column(name = "lastUpdated", nullable = false)
+    
+    @Column(name = "lastUpdate", nullable = false)
     private LocalDateTime lastUpdated;
 
     @PrePersist

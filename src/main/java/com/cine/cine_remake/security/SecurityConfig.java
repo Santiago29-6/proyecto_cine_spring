@@ -61,6 +61,10 @@ public class SecurityConfig {
                 .requestMatchers("api/v1/authentication/sign-in", "api/v1/authentication/sign-up").permitAll()
                 .requestMatchers("api/v1/user/me").authenticated()
                 .requestMatchers("api/v1/user/admin/**").hasRole(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "api/v1/genre/all").authenticated()
+                .requestMatchers("api/v1/genre/**").hasRole(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "api/v1/filmDirector/all").authenticated()
+                .requestMatchers("api/v1/filmDirector/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);
