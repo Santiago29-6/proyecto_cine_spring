@@ -33,6 +33,9 @@ public class JwtProviderImpl implements JwtProvider{
     @Value("${app.jwt.expiration-in-ms}")
     private String jwtExpirationInMs;
 
+    private static final String CLAIM_ROLES = "roles";
+    private static final String CLAIM_USER_ID = "userId";
+
     @Override
     public String generateToken(UserPrincipal auth) {
     String authorities = auth.getAuthorities().stream()
@@ -44,8 +47,8 @@ public class JwtProviderImpl implements JwtProvider{
 
     return Jwts.builder()
             .setSubject(auth.getUsername())
-            .claim("roles", authorities)
-            .claim("userId", auth.getId())
+            .claim(CLAIM_ROLES, authorities)
+            .claim(CLAIM_USER_ID, auth.getId())
             .setExpiration(new Date(System.currentTimeMillis() + expirationInMs))
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
@@ -56,9 +59,9 @@ public class JwtProviderImpl implements JwtProvider{
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         long expirationInMs = Long.parseLong(jwtExpirationInMs);
         return Jwts.builder()
-        .setSubject(user.getEmail())
-        .claim("roles", user.getRole())
-        .claim("userId", user.getId())
+        .setSubject(user.getUsername())
+        .claim(CLAIM_ROLES, user.getRole())
+        .claim(CLAIM_USER_ID, user.getId())
         .setExpiration(new Date(System.currentTimeMillis() + expirationInMs))
         .signWith(key, SignatureAlgorithm.HS512)
         .compact();
@@ -70,36 +73,29 @@ public class JwtProviderImpl implements JwtProvider{
         if (claims == null){
             return null;
         }
-        String email = claims.getSubject();
-        Long userId = claims.get("userId", Long.class);
-        Set<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
+        String username = claims.getSubject();
+        Long userId = claims.get(CLAIM_USER_ID, Long.class);
+        Set<GrantedAuthority> authorities = Arrays.stream(claims.get(CLAIM_ROLES).toString().split(","))
             .map(SecurityUtils::convertToAuthority)
             .collect(Collectors.toSet());
         
         UserDetails userDetails = UserPrincipal.builder()
-        .username(email)
+        .username(username)
         .authorities(authorities)
         .id(userId)
         .build();
 
-        if(email == null){
+        if(username == null){
             return null;
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-
     }
 
     @Override
     public boolean isTokenValid(HttpServletRequest request){
         Claims claims = extractClaims(request);
-        if(claims == null){
-            return false;
-        }
-        if(claims.getExpiration().before(new Date())){
-            return false;
-        }
-        return true;
+        return claims != null && !claims.getExpiration().before(new Date());
     }
 
     private Claims extractClaims(HttpServletRequest request){
