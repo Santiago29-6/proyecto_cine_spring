@@ -64,7 +64,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "api/v1/genre/all").authenticated()
                 .requestMatchers("api/v1/genre/**").hasRole(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.GET, "api/v1/filmDirector/all").authenticated()
-                .requestMatchers("api/v1/filmDirector/**").hasRole(Role.ADMIN.name())
+                .requestMatchers("api/v1/director/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);

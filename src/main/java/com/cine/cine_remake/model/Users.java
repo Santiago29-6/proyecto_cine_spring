@@ -18,26 +18,32 @@ public class Users {
 
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "lastName", nullable = false)
     private String lastName;
+
     @Column(name = "email", nullable = false)
     private String email;
+
     @Column(name = "username", nullable = false)
     private String username;
+
     @Column(name = "password", nullable = false)
     private String password;
+
     @Column(name = "phone", nullable = false)
     private String phone;
+    
     @Column(name = "address", nullable = false)
     private String address;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-    
-    @Column(name = "registrationDate", nullable = false)
+
+    @Column(name = "registration_date", nullable = false, updatable = false)
     private LocalDateTime registrationDate;
 
-    @Column(name = "lastUpdated", nullable = false)
+    @Column(name = "last_updated", nullable = false)
     private LocalDateTime lastUpdated;
 
     @Transient
