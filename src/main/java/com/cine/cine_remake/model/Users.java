@@ -2,6 +2,9 @@ package com.cine.cine_remake.model;
 
 import java.time.LocalDateTime;
 
+import com.cine.cine_remake.model.enums.Role;
+import com.cine.cine_remake.model.enums.UserStatus;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,7 +41,12 @@ public class Users {
     private String address;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estate", nullable = false)
+    private UserStatus estate;
 
     @Column(name = "registration_date", nullable = false, updatable = false)
     private LocalDateTime registrationDate;
