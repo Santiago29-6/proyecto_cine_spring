@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-import com.cine.cine_remake.model.Role;
 import com.cine.cine_remake.model.Users;
+import com.cine.cine_remake.model.enums.Role;
 import com.cine.cine_remake.security.UserPrincipal;
 import com.cine.cine_remake.services.user.UserService;
 

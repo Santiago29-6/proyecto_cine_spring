@@ -1,4 +1,4 @@
-package com.cine.cine_remake.model;
+package com.cine.cine_remake.model.enums;
 
 public enum Role {
     USER,

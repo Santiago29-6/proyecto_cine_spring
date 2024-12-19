@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.cine.cine_remake.model.Role;
 import com.cine.cine_remake.model.Users;
+import com.cine.cine_remake.model.enums.Role;
 import com.cine.cine_remake.repository.UserRepository;
 import com.cine.cine_remake.security.jwt.JwtProvider;
 

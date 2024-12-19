@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.cine.cine_remake.model.Role;
+import com.cine.cine_remake.model.enums.Role;
 import com.cine.cine_remake.security.jwt.JwtAutorizationFilter;
 
 
@@ -63,8 +63,12 @@ public class SecurityConfig {
                 .requestMatchers("api/v1/user/admin/**").hasRole(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.GET, "api/v1/genre/all").authenticated()
                 .requestMatchers("api/v1/genre/**").hasRole(Role.ADMIN.name())
-                .requestMatchers(HttpMethod.GET, "api/v1/filmDirector/all").authenticated()
+                .requestMatchers(HttpMethod.GET, "api/v1/director/all").authenticated()
                 .requestMatchers("api/v1/director/**").hasRole(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "api/v1/actor/all").authenticated()
+                .requestMatchers("api/v1/actor/**").hasRole(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "api/v1/movie/all").authenticated()
+                .requestMatchers("api/v1/movie/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAutorizationFilter(), UsernamePasswordAuthenticationFilter.class);
